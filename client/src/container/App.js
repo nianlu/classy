@@ -1,13 +1,26 @@
 import React from 'react';
-// import logo from './logo.svg';
-// import './App.sass';
+import './App.sass';
 
 function App() {
   return (
-    <div className="App">
-      <header className="navbar">
-        <a href="#">xxx</a>
-      </header>
+    <div className="container">
+      <nav className="navbar">
+        <button>aa</button>
+      </nav>
+
+      <div className="tile is-ancestor">
+        <div className="tile is-parent">
+          <div className="tile is-child box is-1">oo</div>
+          <div className="tile is-child box is-1">oo</div>
+          <div className="tile is-child box is-1">oo</div>
+          <div className="tile is-child box is-1">oo</div>
+          <div className="tile is-child box is-1">oo</div>
+          <div className="tile is-child box is-1">oo</div>
+          <div className="tile is-child box is-1">oo</div>
+          <div className="tile is-child box is-1">oo</div>
+          <div className="tile is-child box is-1">oo</div>
+        </div>
+      </div>
     </div>
   );
 }
