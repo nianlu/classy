@@ -1,74 +1,53 @@
 import React from 'react';
 import './App.sass';
 
+import Nav from './Nav';
+
 function App() {
   return (
     <div>
-      <div className="header">
-        <nav className="navbar">
-          <button>aa</button>
-        </nav>
-      </div>
+      <Nav />
 
       <div className="body">
-        <div className="tile is-ancestor" id="anc">
-          <div className="tile is-4 is-vertical" id="par">
-            <div className="tile" id="chi">
-              <div className="box">Top</div>
-              <div className="box">Top</div>
-              <div className="box">Top</div>
-            </div>
-            <div className="tile">
-              <div className="box">Bottom</div>
-            </div>
-          </div>
-          <div className="tile">
-            <div className="box">vertical</div>
-          </div>
-        </div>
 
-        <div className="tile is-ancestor is-vertical" id="anc">
-          <div className="tile" id="par">
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-          </div>
-          <div className="tile" id="chi">
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-          </div>
-          <div className="tile" id="par">
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-            <div className="box">box</div>
-          </div>
-        </div>
-
+        <table className="table is-bordered">
+          <tr>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+          </tr>
+          <tr>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+          </tr>
+          <tr>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+          </tr>
+          <tr>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+            <td className="c-box">xxx</td>
+          </tr>
+        </table>
       </div>
     </div>
   );
