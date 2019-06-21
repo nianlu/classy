@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.sass';
 
 import Nav from './Nav';
 import Body from './Body';
 
 function App() {
+  const [active, setActive] = useState(1);
   return (
     <div>
-      <Nav />
+      <Nav act={active} onAct={setActive} />
 
-      <Body />
+      <Body act={active}/>
     </div>
   );
 }

@@ -1,46 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
+import './Nav.sass';
 
-function Nav() {
+function Nav(props) {
+  console.log('nav');
+  console.log(props);
+  console.log(props.act);
   return (
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="container">
-      <div class="navbar-brand">
-        <a class="navbar-item subtitle" href="#">Classy</a>
+      <div className="navbar-brand">
+        <a className="navbar-item subtitle" href="#">Classy</a>
       </div>
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item">
+      <div id="navbarBasicExample" className="navbar-menu">
+        <div className="navbar-start">
+          <a className={props.act === 1? "navbar-item c-active" : "navbar-item"} onClick={() => props.onAct(1)}>
             Layout Selection
           </a>
     
-          <a class="navbar-item">
+          <a className={props.act === 2? "navbar-item c-active" : "navbar-item"} onClick={() => props.onAct(2)}>
             Teaching Assistant
           </a>
     
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
+          <div className="navbar-item has-dropdown is-hoverable">
+            <a className="navbar-link">
               More
             </a>
     
-            <div class="navbar-dropdown">
-              <a class="navbar-item">
+            <div className="navbar-dropdown">
+              <a className="navbar-item">
                 About
               </a>
-              <a class="navbar-item">
+              <a className="navbar-item">
                 Contact
               </a>
-              <hr class="navbar-divider" />
-              <a class="navbar-item">
+              <hr className="navbar-divider" />
+              <a className="navbar-item">
                 Report an issue
               </a>
             </div>
           </div>
         </div>
   
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <a class="button is-light">
+        <div className="navbar-end">
+          <div className="navbar-item">
+            <div className="buttons">
+              <a className="button is-light">
                 Log in
               </a>
             </div>
