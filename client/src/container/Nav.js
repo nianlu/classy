@@ -3,6 +3,7 @@ import React from 'react';
 function Nav() {
   return (
     <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div className="container">
       <div class="navbar-brand">
         <a class="navbar-item subtitle" href="#">Classy</a>
       </div>
@@ -26,9 +27,6 @@ function Nav() {
                 About
               </a>
               <a class="navbar-item">
-                Jobs
-              </a>
-              <a class="navbar-item">
                 Contact
               </a>
               <hr class="navbar-divider" />
@@ -48,6 +46,7 @@ function Nav() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </nav>
   );
