@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import './Nav.sass';
 
@@ -5,11 +6,17 @@ function Nav(props) {
   console.log('nav');
   console.log(props);
   console.log(props.act);
+  const reset = () => {
+    localStorage.setItem('myValueInLocalStorage', JSON.stringify('test'));
+    localStorage.setItem('students', JSON.stringify([]));
+    localStorage.setItem('tables', JSON.stringify(Array(10).fill(Array(12).fill(false))));
+  }
+
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="container">
       <div className="navbar-brand">
-        <a className="navbar-item subtitle" href="#">Classy</a>
+        <a className="navbar-item subtitle" href="./">Classy</a>
       </div>
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
@@ -44,6 +51,9 @@ function Nav(props) {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
+              <a className="button is-light" onClick={() => reset()} href='/'>
+                Reset
+              </a>
               <a className="button is-light">
                 Log in
               </a>
