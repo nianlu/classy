@@ -1,25 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 
-const useStateWithLocalStorage = (localStorageKey, defaultValue='') => {
-  // console.log('key', localStorageKey);
-  // console.log('value', defaultValue);
-  // console.log(localStorage.getItem(localStorageKey));
-
-  const [value, setValue] = React.useState(
-    JSON.parse(localStorage.getItem(localStorageKey)) || defaultValue
-  );
-
-  // console.log('localvalue', value);
-
-  const valueString = JSON.stringify(value);
-
-  React.useEffect(() => {
-    localStorage.setItem(localStorageKey, valueString);
-  }, [value]);
-
-  return [value, setValue];
-};
+import { useStateWithLocalStorage } from './useStateWithLocalStorage';
 
 function SeatManagement() {
   // localStorage.setItem('myValueInLocalStorage', JSON.stringify('test'));
@@ -28,8 +10,8 @@ function SeatManagement() {
   const [value, setValue] = useStateWithLocalStorage('myValueInLocalStorage');
   const onChange = event => setValue(event.target.value);
 
-  const [students, setStudents] = useStateWithLocalStorage('students', ['TestStudent']);
-  const [newName, setNewName] = React.useState('');
+  const [search, setSearch] = React.useState('');
+  const [students, setStudents] = useStateWithLocalStorage('students', []);
 
   const [tables, setTables] = useStateWithLocalStorage('tables', Array(10).fill(Array(12).fill()));
   const onChangeTable = (i, j, value) => 
@@ -57,27 +39,19 @@ function SeatManagement() {
           <p className="panel-heading">
             Students
           </p>
-          {/* <div className="panel-block">
+          <div className="panel-block">
             <p className="control has-icons-left">
-              <input className="input is-small" type="text" placeholder="search" />
+              <input className="input is-small" type="text" placeholder="search" value={search} onChange={e => setSearch(e.target.value)} />
               <span className="icon is-small is-left">
                 <i className="fas fa-search" aria-hidden="true"></i>
               </span>
             </p>
-          </div> */}
-          {students.map((s, i) => 
+          </div>
+          {students.filter(s => s.name.toLowerCase().indexOf(search.toLowerCase()) > -1).map((s, i) => 
             <a className="panel-block" key={i}>
-              <span className="panel-icon">
-                <i className="fas fa-book" aria-hidden="true"></i>
-              </span>
-              {s}
+              {s.name}
             </a>
           )}
-          <div className="panel-block">
-            <input className="input" placeholder="name" value={newName} onChange={e => setNewName(e.target.value)}></input>
-            <button className="button is-link is-outlined" onClick={() => {setStudents([...students, newName]);setNewName('');}}>+</button>
-            {/* <button className="button is-link is-outlined is-fullwidth" onClick={() => setStudents([...students, 'new'])}> add </button> */}
-          </div>
         </nav>
       </div>
       <div className="column">

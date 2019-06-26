@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Body.sass';
 
 import SeatManagement from './SeatManagement';
+import StudentManagement from './StudentManagement';
 
 function Body(props) {
   console.log(props);
@@ -10,6 +11,9 @@ function Body(props) {
       <div className="container">
         {props.act === 1 &&
           <SeatManagement />
+        }
+        {props.act === 2 &&
+          <StudentManagement />
         }
       </div>
     </div>

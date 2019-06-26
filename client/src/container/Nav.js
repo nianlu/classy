@@ -7,9 +7,10 @@ function Nav(props) {
   console.log(props);
   console.log(props.act);
   const reset = () => {
-    localStorage.setItem('myValueInLocalStorage', JSON.stringify('test'));
-    localStorage.setItem('students', JSON.stringify([]));
-    localStorage.setItem('tables', JSON.stringify(Array(10).fill(Array(12).fill(false))));
+    localStorage.clear();
+    // localStorage.setItem('myValueInLocalStorage', JSON.stringify('test'));
+    // localStorage.setItem('students', JSON.stringify([]));
+    // localStorage.setItem('tables', JSON.stringify(Array(10).fill(Array(12).fill(false))));
   }
 
   return (
@@ -23,8 +24,12 @@ function Nav(props) {
           <a className={props.act === 1? "navbar-item c-active" : "navbar-item"} onClick={() => props.onAct(1)}>
             Layout Selection
           </a>
-    
+
           <a className={props.act === 2? "navbar-item c-active" : "navbar-item"} onClick={() => props.onAct(2)}>
+            Student Management
+          </a>
+    
+          <a className={props.act === 3? "navbar-item c-active" : "navbar-item"} onClick={() => props.onAct(3)}>
             Teaching Assistant
           </a>
     
