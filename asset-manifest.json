@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/classy/static/css/main.07a50b97.chunk.css",
-    "main.js": "/classy/static/js/main.eab0b4ab.chunk.js",
-    "main.js.map": "/classy/static/js/main.eab0b4ab.chunk.js.map",
+    "main.css": "/classy/static/css/main.395627fa.chunk.css",
+    "main.js": "/classy/static/js/main.a6839ea0.chunk.js",
+    "main.js.map": "/classy/static/js/main.a6839ea0.chunk.js.map",
     "runtime~main.js": "/classy/static/js/runtime~main.e1d6a2f1.js",
     "runtime~main.js.map": "/classy/static/js/runtime~main.e1d6a2f1.js.map",
     "static/js/2.1b3a0643.chunk.js": "/classy/static/js/2.1b3a0643.chunk.js",
     "static/js/2.1b3a0643.chunk.js.map": "/classy/static/js/2.1b3a0643.chunk.js.map",
     "index.html": "/classy/index.html",
-    "precache-manifest.47f3465dfe177ac7ffc5458cb4a2bbf2.js": "/classy/precache-manifest.47f3465dfe177ac7ffc5458cb4a2bbf2.js",
+    "precache-manifest.84c234d82fb794d9cdc8e25040b62b4c.js": "/classy/precache-manifest.84c234d82fb794d9cdc8e25040b62b4c.js",
     "service-worker.js": "/classy/service-worker.js",
-    "static/css/main.07a50b97.chunk.css.map": "/classy/static/css/main.07a50b97.chunk.css.map"
+    "static/css/main.395627fa.chunk.css.map": "/classy/static/css/main.395627fa.chunk.css.map"
   }
 }
