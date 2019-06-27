@@ -11,9 +11,9 @@ function StudentManagement() {
   const [selected, setSelected] = React.useState(0);
   const onChangeStudent = (index, student) => {
     console.log('changing', index, student);
-    setSelected(
-      students.map((s, i) => 
-        (i === index)?
+    setStudents(
+      students.map((s) => 
+        (s.id === index)?
           Object.assign({}, s, student)
           :
           s
@@ -21,8 +21,9 @@ function StudentManagement() {
     )
   }
 
-  console.log(students);
-  console.log(students[selected]);
+  // console.log(students);
+  // console.log(selected);
+  // console.log(students[selected]);
 
   return (
     <div className="columns">
@@ -31,15 +32,15 @@ function StudentManagement() {
           <p className="panel-heading">
             Students
           </p>
-          {students.map((s, i) => 
-            <a className={selected === i? "panel-block is-active c-selected" : "panel-block"} key={i} onClick={() => setSelected(i)}>
+          {students.map((s) => 
+            <a className={selected === s.id? "panel-block is-active c-selected" : "panel-block"} key={s.id} onClick={() => setSelected(s.id)}>
               {s.name}
             </a>
           )}
           <div className="panel-block">
             <input className="input is-small" type="text" placeholder="name" value={newName} onChange={e => setNewName(e.target.value)}></input>
             <button className="button is-link is-outlined is-small" onClick={() => {
-              setStudents([...students, {name: newName}]);
+              setStudents([...students, {name: newName, id: students.length}]);
               setNewName('');
             }}>+</button>
             {/* <button className="button is-link is-outlined is-fullwidth" onClick={() => setStudents([...students, 'new'])}> add </button> */}
@@ -47,109 +48,58 @@ function StudentManagement() {
         </nav>
       </div>
 
-      <div className="column">
-        {students.filter((_,i) => i === selected).map((s, i) =>
-        <div>
-        <div className="field">
-          <label className="label">Name</label>
-          <div className="control">
-            <input className="input" type="text" value={s.name} onChange={e => onChangeStudent(i, {name: e.target.value})} />
-          </div>
-        </div>
+      <div className="column is-6">
+        {students.filter((s) => s.id === selected).map((s) =>
+          <div className="card" key={'s'+s.id}>
+            <div className="card-header c-shadow">
+              <p className="card-header-title">Information</p>
+            </div>
+            <div className="card-content">
 
-        <div className="field">
-          <label className="label">ID</label>
-          <div className="control">
-            <input className="input" type="text" placeholder="Text input" />
-          </div>
-        </div>
+              <div className="field">
+                <label className="label">Name</label>
+                <div className="control">
+                  <input className="input" type="text" value={s.name} onChange={e => onChangeStudent(s.id, {name: e.target.value})} />
+                </div>
+              </div>
 
-        <div className="field">
-          <label className="label">Gender</label>
-          <div className="control">
-            <input className="input" type="text" placeholder="Text input" />
-          </div>
-        </div>
+              <div className="field">
+                <label className="label">Student ID</label>
+                <div className="control">
+                  <input className="input" type="text" value={s.sid} onChange={e => onChangeStudent(s.id, {sid: e.target.value})} />
+                </div>
+              </div>
 
-        <div className="field">
-          <label className="label">Username</label>
-          <div className="control has-icons-left has-icons-right">
-            <input className="input is-success" type="text" placeholder="Text input" value="bulma" />
-            <span className="icon is-small is-left">
-              <i className="fas fa-user"></i>
-            </span>
-            <span className="icon is-small is-right">
-              <i className="fas fa-check"></i>
-            </span>
-          </div>
-          <p className="help is-success">This username is available</p>
-        </div>
+              <div className="field">
+                <label className="label">Gender</label>
+                <div className="control">
+                  <div className="select">
+                    <select value={s.gender} onChange={e => onChangeStudent(s.id, {gender: e.target.value})}>
+                      <option value=""></option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
-        <div className="field">
-          <label className="label">Email</label>
-          <div className="control has-icons-left has-icons-right">
-            <input className="input is-danger" type="email" placeholder="Email input" value="hello@" />
-            <span className="icon is-small is-left">
-              <i className="fas fa-envelope"></i>
-            </span>
-            <span className="icon is-small is-right">
-              <i className="fas fa-exclamation-triangle"></i>
-            </span>
-          </div>
-          <p className="help is-danger">This email is invalid</p>
-        </div>
+              <div className="field">
+                <label className="label">Email</label>
+                <div className="control">
+                  <input className="input" type="email" value={s.email} onChange={e => onChangeStudent(s.id, {email: e.target.value})} />
+                </div>
+              </div>
 
-        <div className="field">
-          <label className="label">Subject</label>
-          <div className="control">
-            <div className="select">
-              <select>
-                <option>Select dropdown</option>
-                <option>With options</option>
-              </select>
+
+              <div className="field">
+                <label className="label">Comment</label>
+                <div className="control">
+                  <textarea className="textarea" placeholder="Textarea" value={s.comment} onChange={e => onChangeStudent(s.id, {comment: e.target.value})} />
+                </div>
+              </div>
+
             </div>
           </div>
-        </div>
-
-        <div className="field">
-          <label className="label">Message</label>
-          <div className="control">
-            <textarea className="textarea" placeholder="Textarea"></textarea>
-          </div>
-        </div>
-
-        <div className="field">
-          <div className="control">
-            <label className="checkbox">
-              <input type="checkbox" />
-              I agree to the <a href="#">terms and conditions</a>
-            </label>
-          </div>
-        </div>
-
-        <div className="field">
-          <div className="control">
-            <label className="radio">
-              <input type="radio" name="question" />
-              Yes
-            </label>
-            <label className="radio">
-              <input type="radio" name="question" />
-              No
-            </label>
-          </div>
-        </div>
-
-        <div className="field is-grouped">
-          <div className="control">
-            <button className="button is-link">Submit</button>
-          </div>
-          <div className="control">
-            <button className="button is-text">Cancel</button>
-          </div>
-        </div>
-
-        </div>
         )}
       </div>
     </div>

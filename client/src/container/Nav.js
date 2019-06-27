@@ -56,7 +56,7 @@ function Nav(props) {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <a className="button is-light" onClick={() => reset()} href='/'>
+              <a className="button is-light" onClick={() => reset()} href='./'>
                 Reset
               </a>
               <a className="button is-light">
