@@ -13,22 +13,23 @@ function SeatManagement() {
   const [search, setSearch] = React.useState('');
   const [students, setStudents] = useStateWithLocalStorage('students', []);
 
-  const [tables, setTables] = useStateWithLocalStorage('tables', Array(10).fill(Array(12).fill()));
-  const onChangeTable = (i, j, value) => 
+  const [tables, setTables] = useStateWithLocalStorage('tables', Array(10).fill(Array(12).fill({hasTable: false})));
+  const onChangeTable = (i, j, table) => 
     setTables(tables.map((row, rownum) => 
       (rownum === i)?
-        row.map((col, colnum) => 
+        row.map((tab, colnum) => 
           (colnum === j)?
-            value
+            Object.assign({}, tab, table)
             :
-            col
+            tab
         )
         :
         row
     ));
 
-  // const tables = Array(10).fill(Array(12).fill());
+  const [selected, setSelected] = React.useState(null);
 
+  // const tables = Array(10).fill(Array(12).fill());
   // console.log('table', tables);
 
   return (
@@ -48,7 +49,7 @@ function SeatManagement() {
             </p>
           </div>
           {students.filter(s => s.name.toLowerCase().indexOf(search.toLowerCase()) > -1).map((s, i) => 
-            <a className="panel-block" key={i}>
+            <a className={selected === s.id? "panel-block is-active c-used" : "panel-block"} key={s.id} onClick={() => setSelected(selected === s.id? null : s.id)}>
               {s.name}
             </a>
           )}
@@ -62,10 +63,14 @@ function SeatManagement() {
               {r.map((t,j) =>
                 // <td className="c-box" key={'s'+i+''+j}>Seat R{i} C{j}</td>
                 <td className="c-td" key={'s'+i+''+j}>
-                  {t?
-                    <div className="box c-box c-selected" onClick={() => onChangeTable(i, j, false)}>Selected</div>
+                  {t.hasTable?
+                    (selected === null?
+                      <div className={t.sit? "box c-box c-used" : "box c-box c-selected"} onClick={() => onChangeTable(i, j, {hasTable: false, sit: null})}>{t.sit? t.sit : 'Table'}</div>
+                    :
+                      <div className={t.sit? "box c-box c-used" : "box c-box c-selected"} onClick={() => onChangeTable(i, j, {sit: students.find((s) => s.id === selected).name})}>{t.sit? t.sit : 'Table'}</div>
+                    )
                   :
-                    <div className="box c-box" onClick={() => onChangeTable(i, j, true)}>Empty</div>
+                    <div className="box c-box" onClick={() => onChangeTable(i, j, {hasTable: true})}></div>
                   }
                 </td>
               )}
