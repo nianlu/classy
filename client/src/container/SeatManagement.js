@@ -56,6 +56,11 @@ function SeatManagement() {
         </nav>
       </div>
       <div className="column">
+        <div class="buttons has-addons">
+          <span class="button is-small">Assign Students</span>
+          <span class="button is-small">Random Students</span>
+          <span class="button is-small">Clear Students</span>
+        </div>
         <table className="table is-bordered">
           <tbody>
           {tables.map((r,i) =>
