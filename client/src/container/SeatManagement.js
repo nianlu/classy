@@ -13,7 +13,7 @@ function SeatManagement() {
   const [search, setSearch] = React.useState('');
   const [students, setStudents] = useStateWithLocalStorage('students', []);
 
-  const [tables, setTables] = useStateWithLocalStorage('tables', Array(10).fill(Array(12).fill({hasTable: false})));
+  const [tables, setTables] = useStateWithLocalStorage('tables', Array(10).fill(Array(12).fill({hasTable: false, sit: null})));
   const onChangeTable = (i, j, table) => 
     setTables(tables.map((row, rownum) => 
       (rownum === i)?
@@ -26,6 +26,28 @@ function SeatManagement() {
         :
         row
     ));
+  
+  const randomStudent = () => {
+    const availableTables = tables.map((r, i) => r.map((t, j) => 
+      (t.hasTable && t.sit === null)?
+        {i: i, j: j}
+      :
+        null
+    )).flat().filter(t => t !== null)
+    console.log(availableTables)
+
+    students.forEach(s => {
+      console.log(s)
+      const idx = Math.floor(Math.random() * Math.floor(availableTables.length))
+      console.log(availableTables.length, idx)
+      console.log(availableTables[idx].i, availableTables[idx].j, s.name)
+      tables[availableTables[idx].i][availableTables[idx].j].sit = s.name
+      console.log('done')
+      availableTables.splice(idx, 1)
+    })
+    console.log(tables)
+    setTables(tables) //do not work?!
+  }
 
   const [selected, setSelected] = React.useState(null);
 
@@ -56,10 +78,14 @@ function SeatManagement() {
         </nav>
       </div>
       <div className="column">
-        <div class="buttons has-addons">
-          <span class="button is-small">Assign Students</span>
-          <span class="button is-small">Random Students</span>
-          <span class="button is-small">Clear Students</span>
+        <div className="buttons has-addons">
+          <span className="button is-small" onClick={randomStudent}>Random Students</span>
+          <span className="button is-small" onClick={() => 
+            setTables(tables.map(r => r.map(t => Object.assign({}, t, {sit: null}))))}
+          >Clear Students</span>
+          <span className="button is-small" onClick={() => 
+            setTables(tables.map(r => r.map(t => Object.assign({}, t, {hasTable: false, sit: null}))))}
+          >Clear Tables</span>
         </div>
         <table className="table is-bordered">
           <tbody>
@@ -70,9 +96,17 @@ function SeatManagement() {
                 <td className="c-td" key={'s'+i+''+j}>
                   {t.hasTable?
                     (selected === null?
-                      <div className={t.sit? "box c-box c-used" : "box c-box c-selected"} onClick={() => onChangeTable(i, j, {hasTable: false, sit: null})}>{t.sit? t.sit : 'Table'}</div>
+                      <div className={t.sit? "box c-box c-used" : "box c-box c-selected"} 
+                        onClick={() => onChangeTable(i, j, {hasTable: false, sit: null})}
+                      >
+                        {t.sit? t.sit : 'Table'}
+                      </div>
                     :
-                      <div className={t.sit? "box c-box c-used" : "box c-box c-selected"} onClick={() => onChangeTable(i, j, {sit: students.find((s) => s.id === selected).name})}>{t.sit? t.sit : 'Table'}</div>
+                      <div className={t.sit? "box c-box c-used" : "box c-box c-selected"} 
+                        onClick={() => onChangeTable(i, j, {sit: students.find((s) => s.id === selected).name})}
+                      >
+                        {t.sit? t.sit : 'Table'}
+                      </div>
                     )
                   :
                     <div className="box c-box" onClick={() => onChangeTable(i, j, {hasTable: true})}></div>
