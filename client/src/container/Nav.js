@@ -33,6 +33,9 @@ function Nav(props) {
             Teaching Assistant
           </a>
     
+        </div>
+  
+        <div className="navbar-end">
           <div className="navbar-item has-dropdown is-hoverable">
             <a className="navbar-link">
               More
@@ -51,9 +54,6 @@ function Nav(props) {
               </a>
             </div>
           </div>
-        </div>
-  
-        <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
               <a className="button is-light" onClick={() => reset()} href='./'>
