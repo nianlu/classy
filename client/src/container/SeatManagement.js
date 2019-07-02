@@ -12,6 +12,17 @@ function SeatManagement() {
 
   const [search, setSearch] = React.useState('');
   const [students, setStudents] = useStateWithLocalStorage('students', []);
+  const onChangeStudent = (index, student) => {
+    console.log('changing', index, student);
+    setStudents(
+      students.map((s) => 
+        (s.id === index)?
+          Object.assign({}, s, student)
+          :
+          s
+      )
+    )
+  }
 
   const [tables, setTables] = useStateWithLocalStorage('tables', Array(10).fill(Array(12).fill({hasTable: false, sit: null})));
   const onChangeTable = (i, j, table) => 
@@ -34,18 +45,22 @@ function SeatManagement() {
       :
         null
     )).flat().filter(t => t !== null)
-    console.log(availableTables)
 
-    students.forEach(s => {
-      // console.log(s)
-      const idx = Math.floor(Math.random() * Math.floor(availableTables.length))
-      // console.log(availableTables.length, idx)
-      // console.log(availableTables[idx].i, availableTables[idx].j, s.name)
-      tables[availableTables[idx].i][availableTables[idx].j].sit = s.name
-      // console.log('done')
-      availableTables.splice(idx, 1)
-    })
-    console.log(tables)
+    setStudents(students.map(s => {
+      if (availableTables.length > 0 && (s.table === undefined || s.table === null)) {
+        const idx = Math.floor(Math.random() * Math.floor(availableTables.length))
+        tables[availableTables[idx].i][availableTables[idx].j].sit = s.name
+        s.table = [availableTables[idx].i, availableTables[idx].j]
+        availableTables.splice(idx, 1)
+      }
+      return s
+    }))
+    // students.filter(s => s.table === undefined || s.table === null).forEach(s => {
+    //   const idx = Math.floor(Math.random() * Math.floor(availableTables.length))
+    //   tables[availableTables[idx].i][availableTables[idx].j].sit = s.name
+    //   onChangeStudent(s.id, {table: [availableTables[idx].i, availableTables[idx].j]})
+    //   availableTables.splice(idx, 1)
+    // })
     setTables(tables.map(r => r))
   }
 
@@ -71,7 +86,15 @@ function SeatManagement() {
             </p>
           </div>
           {students.filter(s => s.name.toLowerCase().indexOf(search.toLowerCase()) > -1).map((s, i) => 
-            <a className={selected === s.id? "panel-block is-active c-used" : "panel-block"} key={s.id} onClick={() => setSelected(selected === s.id? null : s.id)}>
+            <a className={selected === s.id? "panel-block is-active c-used" : s.table? "panel-block c-selected" : "panel-block"} key={s.id} 
+              onClick={() => 
+                setSelected((s.table === undefined || s.table === null)?
+                  (selected === s.id? null : s.id)
+                :
+                  null
+                )
+              }
+            >
               {s.name}
             </a>
           )}
@@ -80,11 +103,17 @@ function SeatManagement() {
       <div className="column">
         <div className="buttons has-addons">
           <span className="button is-small" onClick={randomStudent}>Random Students</span>
-          <span className="button is-small" onClick={() => 
-            setTables(tables.map(r => r.map(t => Object.assign({}, t, {sit: null}))))}
+          <span className="button is-small" 
+            onClick={() => {
+              setTables(tables.map(r => r.map(t => Object.assign({}, t, {sit: null}))))
+              setStudents(students.map(s => Object.assign({}, s, {table: null})))
+            }}
           >Clear Students</span>
-          <span className="button is-small" onClick={() => 
-            setTables(tables.map(r => r.map(t => Object.assign({}, t, {hasTable: false, sit: null}))))}
+          <span className="button is-small" 
+            onClick={() => {
+              setTables(tables.map(r => r.map(t => Object.assign({}, t, {hasTable: false, sit: null}))))
+              setStudents(students.map(s => Object.assign({}, s, {table: null})))
+            }}
           >Clear Tables</span>
         </div>
         <table className="table is-bordered">
@@ -103,7 +132,10 @@ function SeatManagement() {
                       </div>
                     :
                       <div className={t.sit? "box c-box c-used" : "box c-box c-selected"} 
-                        onClick={() => onChangeTable(i, j, {sit: students.find((s) => s.id === selected).name})}
+                        onClick={() => {
+                          onChangeTable(i, j, {sit: students.find((s) => s.id === selected).name})
+                          onChangeStudent(selected, {table: [i, j]})
+                        }}
                       >
                         {t.sit? t.sit : 'Table'}
                       </div>
