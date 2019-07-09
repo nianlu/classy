@@ -33,6 +33,10 @@ function Nav(props) {
             Teaching Assistant
           </a>
     
+          <a className={props.act === 4? "navbar-item c-active" : "navbar-item"} onClick={() => props.onAct(4)}>
+            Class Management
+          </a>
+
         </div>
   
         <div className="navbar-end">

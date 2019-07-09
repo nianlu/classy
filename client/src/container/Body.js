@@ -4,6 +4,7 @@ import './Body.sass';
 import SeatManagement from './SeatManagement';
 import StudentManagement from './StudentManagement';
 import TeachingAssistant from './TeachingAssistant';
+import ClassManagement from './ClassManagement';
 
 function Body(props) {
   console.log(props);
@@ -18,6 +19,9 @@ function Body(props) {
         }
         {props.act === 3 &&
           <TeachingAssistant />
+        }
+        {props.act === 4 &&
+          <ClassManagement />
         }
       </div>
     </div>

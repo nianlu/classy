@@ -5,7 +5,7 @@ import Nav from './Nav';
 import Body from './Body';
 
 function App() {
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(4);
   return (
     <div>
       <Nav act={active} onAct={setActive} />
