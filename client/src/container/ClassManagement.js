@@ -3,21 +3,20 @@ import React from 'react';
 
 import { useStateWithLocalStorage } from './useStateWithLocalStorage';
 
-function ClassManagement() {
-  // localStorage.setItem('myValueInLocalStorage', JSON.stringify('test'));
-  // localStorage.setItem('students', JSON.stringify(['cc']));
+import Layout from './Layout';
 
-  const [value, setValue] = useStateWithLocalStorage('myValueInLocalStorage');
-  const onChange = event => setValue(event.target.value);
+function ClassManagement() {
+
+  const [active, setActive] = React.useState(2);
 
   const [search, setSearch] = React.useState('');
-  const [students, setStudents] = useStateWithLocalStorage('students', []);
-  const onChangeStudent = (index, student) => {
-    console.log('changing', index, student);
-    setStudents(
-      students.map((s) => 
+  const [clases, setClases] = useStateWithLocalStorage('clases', []);
+  const onChangeStudent = (index, clas) => {
+    console.log('changing', index, clas);
+    setClases(
+      clases.map((s) => 
         (s.id === index)?
-          Object.assign({}, s, student)
+          Object.assign({}, s, clas)
           :
           s
       )
@@ -46,7 +45,7 @@ function ClassManagement() {
         null
     )).flat().filter(t => t !== null)
 
-    setStudents(students.map(s => {
+    setClases(clases.map(s => {
       if (availableTables.length > 0 && (s.table === undefined || s.table === null)) {
         const idx = Math.floor(Math.random() * Math.floor(availableTables.length))
         tables[availableTables[idx].i][availableTables[idx].j].sit = s.name
@@ -85,7 +84,7 @@ function ClassManagement() {
               </span>
             </p>
           </div>
-          {students.filter(s => s.name.toLowerCase().indexOf(search.toLowerCase()) > -1).map((s, i) => 
+          {clases.filter(s => s.name.toLowerCase().indexOf(search.toLowerCase()) > -1).map((s, i) => 
             <a className={selected === s.id? "panel-block is-active c-used" : s.table? "panel-block c-selected" : "panel-block"} key={s.id} 
               onClick={() => 
                 setSelected((s.table === undefined || s.table === null)?
@@ -101,39 +100,16 @@ function ClassManagement() {
         </nav>
       </div>
       <div className="column">
-        <table className="table is-bordered">
-          <tbody>
-          {tables.map((r,i) =>
-            <tr key={'r'+i}>
-              {r.map((t,j) =>
-                // <td className="c-box" key={'s'+i+''+j}>Seat R{i} C{j}</td>
-                <td className="c-td" key={'s'+i+''+j}>
-                  {t.hasTable?
-                    (selected === null?
-                      <div className={t.sit? "box c-box c-used" : "box c-box c-selected"} 
-                        onClick={() => onChangeTable(i, j, {hasTable: false, sit: null})}
-                      >
-                        {t.sit? t.sit : 'Table'}
-                      </div>
-                    :
-                      <div className={t.sit? "box c-box c-used" : "box c-box c-selected"} 
-                        onClick={() => {
-                          onChangeTable(i, j, {sit: students.find((s) => s.id === selected).name})
-                          onChangeStudent(selected, {table: [i, j]})
-                        }}
-                      >
-                        {t.sit? t.sit : 'Table'}
-                      </div>
-                    )
-                  :
-                    <div className="box c-box" onClick={() => onChangeTable(i, j, {hasTable: true})}></div>
-                  }
-                </td>
-              )}
-            </tr>
-          )}
-          </tbody>
-        </table>
+        <div className="tabs is-boxed">
+          <ul>
+            <li className={active === 1? "is-active" : ""} onClick={() => setActive(1)}><a>Info</a></li>
+            <li className={active === 2? "is-active" : ""} onClick={() => setActive(2)}><a>Layout</a></li>
+            <li className={active === 3? "is-active" : ""} onClick={() => setActive(3)}><a>Time</a></li>
+          </ul>
+        </div>
+        {active === 2 &&
+          <Layout tables={tables} onChangeTable={onChangeTable} />
+        }
       </div>
     </div>
   );
