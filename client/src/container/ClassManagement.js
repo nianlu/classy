@@ -4,10 +4,11 @@ import React from 'react';
 import { useStateWithLocalStorage } from './useStateWithLocalStorage';
 
 import Layout from './Layout';
+import Timer from './Timer';
 
 function ClassManagement() {
 
-  const [active, setActive] = React.useState(2);
+  const [active, setActive] = React.useState(3);
 
   const [search, setSearch] = React.useState('');
   const [clases, setClases] = useStateWithLocalStorage('clases', []);
@@ -109,6 +110,9 @@ function ClassManagement() {
         </div>
         {active === 2 &&
           <Layout tables={tables} onChangeTable={onChangeTable} />
+        }
+        {active === 3 &&
+          <Timer />
         }
       </div>
     </div>
