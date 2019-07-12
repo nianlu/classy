@@ -8,7 +8,7 @@ import Timer from './Timer';
 
 function ClassManagement() {
 
-  const [active, setActive] = React.useState(3);
+  const [active, setActive] = React.useState(2);
 
   const [search, setSearch] = React.useState('');
   const [clases, setClases] = useStateWithLocalStorage('clases', []);
