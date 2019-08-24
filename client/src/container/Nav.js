@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import './Nav.sass';
 
 function Nav(props) {
-  console.log('nav');
-  console.log(props);
-  console.log(props.act);
+  // console.log('nav');
+  // console.log(props);
+  // console.log(props.act);
   const reset = () => {
     localStorage.clear();
     // localStorage.setItem('myValueInLocalStorage', JSON.stringify('test'));
@@ -63,7 +63,7 @@ function Nav(props) {
               <a className="button is-light" onClick={() => reset()} href='./'>
                 Reset
               </a>
-              <a className="button is-light">
+              <a className="button" onClick={() => props.onAct(0)}>
                 Log in
               </a>
             </div>

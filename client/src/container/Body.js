@@ -5,6 +5,7 @@ import SeatManagement from './SeatManagement';
 import StudentManagement from './StudentManagement';
 import TeachingAssistant from './TeachingAssistant';
 import ClassManagement from './ClassManagement';
+import Login from './Login';
 
 function Body(props) {
   console.log(props);
@@ -22,6 +23,9 @@ function Body(props) {
         }
         {props.act === 4 &&
           <ClassManagement />
+        }
+        {props.act === 0 &&
+          <Login />
         }
       </div>
     </div>
