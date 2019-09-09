@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './App.sass';
 
-import Nav from '../container/Nav';
-import Body from '../container/Body';
+import Nav from './Nav';
+import Body from './Body';
 
 function App() {
   const [active, setActive] = useState(0);

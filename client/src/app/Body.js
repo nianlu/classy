@@ -1,11 +1,11 @@
 import React from 'react';
 import './Body.sass';
 
-import SeatManagement from './SeatManagement';
-import StudentManagement from './StudentManagement';
-import TeachingAssistant from './TeachingAssistant';
-import ClassManagement from './ClassManagement';
-import Login from './Login';
+import SeatManagement from '../container/SeatManagement';
+import StudentManagement from '../container/StudentManagement';
+import TeachingAssistant from '../container/TeachingAssistant';
+import ClassManagement from '../container/ClassManagement';
+import Login from '../container/Login';
 
 function Body(props) {
   console.log(props);

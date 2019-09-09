@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://nianlu.github.io/classy",
   "dependencies": {
+    "axios": "^0.19.0",
     "bulma": "^0.7.5",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
