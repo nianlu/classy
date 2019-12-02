@@ -21,7 +21,8 @@ public class AccountController {
   }
 
   @RequestMapping("/accounts/{username}")
-  public List<Account> getByUsername(@PathVariable("username") String username) {
+  public Account getByUsername(@PathVariable("username") String username) {
+//  public List<Account> getByUsername(@PathVariable("username") String username) {
     return repository.findByUsername(username);
   }
 }
