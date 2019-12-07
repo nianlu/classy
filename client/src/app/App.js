@@ -6,6 +6,13 @@ import Body from './Body';
 
 function App() {
   const [active, setActive] = useState(0);
+
+  React.useEffect(() => {
+    console.log('checking token');
+    const a = sessionStorage.getItem('token');
+    console.log(a);
+  });
+
   return (
     <div>
       <Nav act={active} onAct={setActive} />

@@ -5,7 +5,7 @@ import SeatManagement from '../container/SeatManagement';
 import StudentManagement from '../container/StudentManagement';
 import TeachingAssistant from '../container/TeachingAssistant';
 import ClassManagement from '../container/ClassManagement';
-import Login from '../container/Login';
+import Login from '../feature/user/Login';
 
 function Body(props) {
   console.log(props);
