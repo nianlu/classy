@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MainController {
 
-    @RequestMapping("/test")
+    @RequestMapping("/api/test")
     public Student getTest() {
         return new Student("aaa");
     }

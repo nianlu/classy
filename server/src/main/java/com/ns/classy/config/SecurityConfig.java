@@ -1,9 +1,12 @@
 package com.ns.classy.config;
 
 import com.ns.classy.service.AccountService;
+import com.ns.classy.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,8 +15,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -31,25 +36,52 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  AccountService accountService;
+//  @Autowired
+//  JwtService jwtService;
 
-  @Override
-  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-
-  }
+//  @Override
+//  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+//
+//    authenticationManagerBuilder.authenticationProvider(new AuthenticationProvider() {
+//      @Override
+//      public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+//        String username = authentication.getName();
+//        String password = (String) authentication.getCredentials();
+//        accountService.login(username, password);
+//        return null;
+//      }
+//
+//      @Override
+//      public boolean supports(Class<?> aClass) {
+//        return true;
+//      }
+//    });
+//
+//  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+//      .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+      .antMatchers("/api/login").permitAll()
+      .antMatchers("/accounts/**").permitAll()
+      .anyRequest().fullyAuthenticated();
+
     http
       .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
-      .authorizeRequests()
-        .antMatchers("/accounts/**")
-          .permitAll()
-        .anyRequest()
-          .authenticated();
+//      .cors().and()
+      .csrf().disable();
+
+    http.exceptionHandling()
+      .authenticationEntryPoint(new AuthenticationEntryPoint() {
+        @Override
+        public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+          httpServletResponse.sendError(httpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        }
+      });
+
 
     http.addFilterBefore(new OncePerRequestFilter() {
       @Override
@@ -59,22 +91,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
           String auth = httpServletRequest.getHeader("Authorization");
 
-//          System.out.println(auth);
+          if (!StringUtils.hasText(auth))
+            throw new Exception("Missing Authorization header");
 
-          String jwt = (StringUtils.hasText(auth) && auth.startsWith("Bearer"))? auth.substring(7) : null;
+          if (!auth.startsWith("Bearer "))
+            throw new Exception("Invalid Authorization header");
 
-//          System.out.println(jwt);
+//          String username = jwtService.validate(auth.substring(7));
 
-          if (!jwt.equalsIgnoreCase("testtoken")) throw new Exception("wrong jwt token");
+          // fake auth
+          String jwt = auth.substring(7);
+          if (!jwt.endsWith("token"))
+            throw new Exception("Invalid token");
 
-          UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken("user", null, List.of(new SimpleGrantedAuthority("user")));
+          String username = jwt.substring(0, jwt.length()-5);
+          // end fake auth
+
+          if (username == null)
+            throw new Exception("Invalid token");
+
+//          String jwt = (StringUtils.hasText(auth) && auth.startsWith("Bearer"))? auth.substring(7) : null;
+
+//          if (!jwt.equalsIgnoreCase("testtoken")) throw new Exception("wrong jwt token");
+
+          UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null, List.of(new SimpleGrantedAuthority("user")));
 
           token.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
 
           SecurityContextHolder.getContext().setAuthentication(token);
 
         } catch (Exception e) {
-          System.out.println(e.getMessage());
+//          System.out.println(e.getMessage());
         }
 
         // add to filer chain

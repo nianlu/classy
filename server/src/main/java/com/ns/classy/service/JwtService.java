@@ -8,17 +8,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AccountService {
+public class JwtService {
 
-  @Autowired
-  private AccountRepository repository;
+  public String getToken(String username) {
 
-  public List<Account> findAll() {
-    return (List<Account>) repository.findAll();
+    String token = username+"token";
+
+    return token;
   }
 
-  public Account findByUsername(String username) {
-    return repository.findByUsername(username);
+  public String validate(String token) {
+
+    if (token.endsWith("token")) return token.substring(0, token.length()-5);
+
+    return null;
   }
 
 }
