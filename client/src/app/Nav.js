@@ -37,6 +37,10 @@ function Nav(props) {
             Class Management
           </a>
 
+          <a className={props.act === 5? "navbar-item c-active" : "navbar-item"} onClick={() => props.onAct(5)}>
+            Student Score
+          </a>
+
         </div>
   
         <div className="navbar-end">

@@ -44,7 +44,8 @@ function Login(props) {
                 </div>
                 <div className="field">
                   {/* <button className="button is-success is-centered" type="submit" style={{marginLeft: '5rem'}}> */}
-                  <button className="button is-success is-centered" onClick={e => {e.preventDefault();props.login(username, password);}} style={{marginLeft: '5rem'}}>
+                  {/* <button className="button is-success is-centered" onClick={e => {e.preventDefault();props.login(username, password);}} style={{marginLeft: '5rem'}}> */}
+                  <button className="button is-success is-centered" onClick={e => {props.login(username, password);}} style={{marginLeft: '5rem'}}>
                     Login
                   </button>
                 </div>

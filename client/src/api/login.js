@@ -9,8 +9,11 @@ export const login = (username, password, thenback, catchback) =>
       password,
     }
   })
-  .then(response => thenback(response))
+  .then(response => thenback(response.data))
   .catch(error => catchback(error))
+
+export const loginFake = (username, password, thenback, catchback) =>
+  thenback('fake-login-token')
 
 // export const test = () =>
 //   axios.get('/accounts', {

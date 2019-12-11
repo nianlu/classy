@@ -41,10 +41,11 @@ export default userSlice.reducer
 export const login = (email, password) => dispatch => {
   console.log('accountreducer login')
   dispatch(loginStart)
-  api.login(
+  // api.login(
+  api.loginFake(
     email, 
     password, 
-    response => dispatch(loginSuccess(response.data)),
+    data => dispatch(loginSuccess(data)),
     error => dispatch(loginFail(error.message))
   )
 }

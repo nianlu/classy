@@ -11,6 +11,7 @@ function App() {
     console.log('checking token');
     const a = sessionStorage.getItem('token');
     console.log(a);
+    a? active === 0 && setActive(5) : setActive(0)
   });
 
   return (

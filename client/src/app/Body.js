@@ -6,6 +6,7 @@ import StudentManagement from '../container/StudentManagement';
 import TeachingAssistant from '../container/TeachingAssistant';
 import ClassManagement from '../container/ClassManagement';
 import Login from '../feature/user/Login';
+import Score from '../feature/score/Score';
 
 function Body(props) {
   console.log(props);
@@ -23,6 +24,9 @@ function Body(props) {
         }
         {props.act === 4 &&
           <ClassManagement />
+        }
+        {props.act === 5 &&
+          <Score />
         }
         {props.act === 0 &&
           <Login />
