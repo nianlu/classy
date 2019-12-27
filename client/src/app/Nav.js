@@ -3,15 +3,8 @@ import React, { useState } from 'react';
 import './Nav.sass';
 
 function Nav(props) {
-  // console.log('nav');
-  // console.log(props);
-  // console.log(props.act);
-  const reset = () => {
-    localStorage.clear();
-    // localStorage.setItem('myValueInLocalStorage', JSON.stringify('test'));
-    // localStorage.setItem('students', JSON.stringify([]));
-    // localStorage.setItem('tables', JSON.stringify(Array(10).fill(Array(12).fill(false))));
-  }
+
+  const { act, onAct, login, onLogout } = props
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -21,23 +14,23 @@ function Nav(props) {
       </div>
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
-          <a className={props.act === 1? "navbar-item c-active" : "navbar-item"} onClick={() => props.onAct(1)}>
+          <a className={act === 1? "navbar-item c-active" : "navbar-item"} onClick={() => onAct(1)}>
             Layout Selection
           </a>
 
-          <a className={props.act === 2? "navbar-item c-active" : "navbar-item"} onClick={() => props.onAct(2)}>
+          <a className={act === 2? "navbar-item c-active" : "navbar-item"} onClick={() => onAct(2)}>
             Student Management
           </a>
     
-          <a className={props.act === 3? "navbar-item c-active" : "navbar-item"} onClick={() => props.onAct(3)}>
+          <a className={act === 3? "navbar-item c-active" : "navbar-item"} onClick={() => onAct(3)}>
             Teaching Assistant
           </a>
     
-          <a className={props.act === 4? "navbar-item c-active" : "navbar-item"} onClick={() => props.onAct(4)}>
+          <a className={act === 4? "navbar-item c-active" : "navbar-item"} onClick={() => onAct(4)}>
             Class Management
           </a>
 
-          <a className={props.act === 5? "navbar-item c-active" : "navbar-item"} onClick={() => props.onAct(5)}>
+          <a className={act === 5? "navbar-item c-active" : "navbar-item"} onClick={() => onAct(5)}>
             Student Score
           </a>
 
@@ -64,12 +57,15 @@ function Nav(props) {
           </div>
           <div className="navbar-item">
             <div className="buttons">
-              <a className="button is-light" onClick={() => reset()} href='./'>
-                Reset
-              </a>
-              <a className="button" onClick={() => props.onAct(0)}>
-                Log in
-              </a>
+              {login?
+                <a className="button" onClick={() => {onLogout();onAct(0)}}>
+                  Log out
+                </a>
+                :
+                <a className="button" onClick={() => onAct(0)}>
+                  Login
+                </a>
+              }
             </div>
           </div>
         </div>

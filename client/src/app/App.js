@@ -5,8 +5,12 @@ import './App.sass';
 import Nav from './Nav';
 import Body from './Body';
 
+import { logout } from '../feature/user/userSlice'
+
+const mapDispatch = { logout }
+
 function App(props) {
-  const { login } = props
+  const { login, logout } = props
 
   const [active, setActive] = useState(0)
 
@@ -19,9 +23,14 @@ function App(props) {
     // a? active === 0 && setActive(5) : setActive(0)
   })
 
+  const handleLogout = _ => {
+    sessionStorage.removeItem('token')
+    logout()
+  }
+
   return (
     <div>
-      <Nav act={active} onAct={setActive} />
+      <Nav act={active} onAct={setActive} login={login} onLogout={handleLogout} />
 
       <Body act={active}/>
     </div>
@@ -32,4 +41,4 @@ const mapState = state => ({
   login: state.user.login
 })
 
-export default connect(mapState, null)(App)
+export default connect(mapState, mapDispatch)(App)

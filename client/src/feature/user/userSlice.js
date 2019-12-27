@@ -26,12 +26,17 @@ const userSlice = createSlice({
       console.log('accountreducer loginfail', action.payload)
       sessionStorage.removeItem('token')
       state.login = false
-    }
+    },
+    logout(state, action) {
+      console.log('accountreducer logout')
+      state.login = false
+      state.username = null
+    },
   }
 })
 
 export const {
-  loginStart, loginSuccess, loginFailure
+  loginStart, loginSuccess, loginFailure, logout
 } = userSlice.actions
 
 export default userSlice.reducer
@@ -40,7 +45,6 @@ export const login = (email, password) => dispatch => {
   console.log('accountreducer login')
   dispatch(loginStart)
   api.login(
-  // api.loginFake(
     email, 
     password, 
     data => {

@@ -30,11 +30,5 @@ export const login = (username, password, thenback, catchback) =>
   .then(response => thenback(response.data))
   .catch(error => catchback(error))
 
-export const loginFake = (username, password, thenback, catchback) =>
-  thenback('fake-login-token')
-
-// export const test = () =>
-//   axios.get('/accounts', {
-//   })
-//   .then(() => console.log('success'))
-//   .catch(() => console.log('failure'))
+// export const login = (username, password, thenback, catchback) =>
+//   thenback('eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoidXNlciJ9.wIh6IORjUMCIeJAyXohVfpt4VqSlR1uyIrMGmaxR5u4')
