@@ -17,12 +17,11 @@ public class AccountController {
   @Autowired
   private AccountService service;
 
-  @RequestMapping("/accounts")
-  public List<Account> getAll() {
-    return (List<Account>) service.findAll();
-  }
+//  @RequestMapping("/accounts")
+//  public List<Account> getAll() {
+//    return (List<Account>) service.findAll();
+//  }
 
-  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/api/login")
   public String login(@RequestHeader("Authorization") String auth) {
 //    System.out.println(auth);

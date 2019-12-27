@@ -7,8 +7,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MainController {
 
+    @RequestMapping("/")
+    public String getRoot() {
+        return "hello";
+    }
+
     @RequestMapping("/api/test")
-    public Student getTest() {
+    public String getApiTest() {
+        return "api test";
+    }
+
+    @RequestMapping("/api/s")
+    public Student getStudent() {
         return new Student("aaa");
     }
 
