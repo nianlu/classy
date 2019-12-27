@@ -1,11 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
+
+import jwtDecode from 'jwt-decode'
 import * as api from '../../api/login'
+
+const token = sessionStorage.getItem('token')
+const initial = {
+  login: token && token.length > 0,
+  username: token && jwtDecode(token).user,
+}
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    login: false
-  },
+  initialState: initial,
   reducers: {
     loginStart(state, action) {
       console.log('accountreducer loginstart')
@@ -13,18 +19,10 @@ const userSlice = createSlice({
     },
     loginSuccess(state, action) {
       console.log('accountreducer', action.payload)
-      if (action.payload) {
-        sessionStorage.setItem('token', action.payload)
-        state.login = true
-        console.log('success')
-      } else {
-        sessionStorage.removeItem('token')
-        state.login = false
-        console.log('failed')
-      }
-      // state.login = true
+      state.username = action.payload.username
+      state.login = true
     },
-    loginFail(state, action) {
+    loginFailure(state, action) {
       console.log('accountreducer loginfail', action.payload)
       sessionStorage.removeItem('token')
       state.login = false
@@ -33,7 +31,7 @@ const userSlice = createSlice({
 })
 
 export const {
-  loginStart, loginSuccess, loginFail
+  loginStart, loginSuccess, loginFailure
 } = userSlice.actions
 
 export default userSlice.reducer
@@ -41,12 +39,27 @@ export default userSlice.reducer
 export const login = (email, password) => dispatch => {
   console.log('accountreducer login')
   dispatch(loginStart)
-  // api.login(
-  api.loginFake(
+  api.login(
+  // api.loginFake(
     email, 
     password, 
-    data => dispatch(loginSuccess(data)),
-    error => dispatch(loginFail(error.message))
+    data => {
+      if (data && data.length > 0) {
+        // localStorage.setItem('token', data)
+        sessionStorage.setItem('token', data)
+        const user = jwtDecode(data).user
+        if (user && user.length > 0) {
+          dispatch(loginSuccess({username: user}))
+        } else {
+          dispatch(loginFailure())
+        }
+        // dispatch(loginSuccess({username: 'testuser'}))
+      } else {
+        dispatch(loginFailure())
+      }
+    },
+    // dispatch(loginSuccess(data)),
+    error => dispatch(loginFailure(error.message))
   )
 }
 
@@ -57,6 +70,6 @@ export const login = (email, password) => dispatch => {
 //     email, 
 //     password, 
 //     response => dispatch(loginSuccess(response)),
-//     error => dispatch(loginFail(error.message))
+//     error => dispatch(loginFailure(error.message))
 //   )
 // }
