@@ -52,9 +52,12 @@ const Score = (props) => {
         </nav>
       </div>
       <div className="column is-10">
-        <ReactFileReader handleFiles={handleFiles} fileTypes={['.csv']}>
-          <button className='btn'>Upload</button>
-        </ReactFileReader>
+        <div className="buttons has-addons">
+          <ReactFileReader handleFiles={handleFiles} fileTypes={['.csv']}>
+            <span className="button is-small">Upload</span>
+          </ReactFileReader>
+          <span className="button is-small" onClick={_ => console.log(csv)}>Save</span>
+        </div>
         {(csv && csv !== undefined && csv.length > 0) &&
           <div className="table-container">
             <table className="table is-bordered is-hoverable is-narrow" style={{fontSize: '0.8rem'}}>

@@ -110,7 +110,7 @@
                 <artifactId>appengine-maven-plugin</artifactId>
                 <version>2.2.0</version>
                 <configuration>
-                    <version>classy-test</version>
+                    <version>api-test</version>
                 </configuration>
             </plugin>
         </plugins>

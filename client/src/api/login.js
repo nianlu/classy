@@ -20,15 +20,15 @@ axios.interceptors.request.use(
   error => Promise.reject(error)
 )
 
-export const login = (username, password, thenback, catchback) =>
-  axios.get('/api/login', {
-    auth: {
-      username,
-      password,
-    }
-  })
-  .then(response => thenback(response.data))
-  .catch(error => catchback(error))
-
 // export const login = (username, password, thenback, catchback) =>
-//   thenback('eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoidXNlciJ9.wIh6IORjUMCIeJAyXohVfpt4VqSlR1uyIrMGmaxR5u4')
+//   axios.get('/api/login', {
+//     auth: {
+//       username,
+//       password,
+//     }
+//   })
+//   .then(response => thenback(response.data))
+//   .catch(error => catchback(error))
+
+export const login = (username, password, thenback, catchback) =>
+  thenback('eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoidXNlciJ9.wIh6IORjUMCIeJAyXohVfpt4VqSlR1uyIrMGmaxR5u4')

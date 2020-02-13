@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import jwtDecode from 'jwt-decode'
-import * as api from '../../api/login'
+// import * as api from '../../api/login'
+import * as api from 'api/login'
 
 const token = sessionStorage.getItem('token')
 const initial = {

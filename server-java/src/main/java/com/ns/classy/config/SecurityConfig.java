@@ -1,26 +1,20 @@
 package com.ns.classy.config;
 
-import com.ns.classy.service.AccountService;
-import com.ns.classy.service.JwtService;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -30,6 +24,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Key;
 import java.util.List;
 
 @Configuration
@@ -62,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
-      .antMatchers("/**").permitAll()
+//      .antMatchers("/**").permitAll()
 //      .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
       .antMatchers("/api/login").permitAll()
       .antMatchers("/accounts/**").permitAll()
@@ -101,12 +96,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //          String username = jwtService.validate(auth.substring(7));
 
-          // fake auth
-          String jwt = auth.substring(7);
-          if (!jwt.endsWith("token"))
-            throw new Exception("Invalid token");
+          byte[] keyBytes = Decoders.BASE64.decode("testsecretkeytestsecretkeytestsecretkeytestsecretkey");
+          Key key = Keys.hmacShaKeyFor(keyBytes);
+          String username = Jwts.parser().setSigningKey(key).parseClaimsJws(auth.substring(7)).getBody().get("user", String.class);
 
-          String username = jwt.substring(0, jwt.length()-5);
+//          System.out.println(username);
+
+          // fake auth
+//          string jwt = auth.substring(7);
+//          if (!jwt.endswith("token"))
+//            throw new exception("invalid token");
+//
+//          String username = jwt.substring(0, jwt.length()-5);
           // end fake auth
 
           if (username == null)

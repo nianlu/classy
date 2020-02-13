@@ -17,3 +17,7 @@ gcloud app deploy
 ---
 
 gcloud app deploy dispatch.yaml
+
+---
+
+./Downloads/cloud_sql_proxy -instances=classy-262719:us-east1:classy-dev=tcp:5432

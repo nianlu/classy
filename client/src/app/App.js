@@ -5,7 +5,7 @@ import './App.sass';
 import Nav from './Nav';
 import Body from './Body';
 
-import { logout } from '../feature/user/userSlice'
+import { logout } from 'feature/user/userSlice'
 
 const mapDispatch = { logout }
 
